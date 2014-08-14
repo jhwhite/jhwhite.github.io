@@ -10,9 +10,9 @@ I've had the unfortunate experience of being laid off recently due to a re-org o
 and hit the job search hard the next day.
 
 Other than not having a steady source of income, one of the problems I've encountered is how to track my applications. The first time this happened to me I didn't do any real tracking. Toward the end of my job search I 
-started using a web app to track the submitted applications, where I was in the process, and any notes about contacts for the post. But 2 years later at my next job search I wasn't able to find the app nor have I been able to find it this time. So I had to move on to something else.
+started using a web app to track the submitted applications, where I was in the process, and any notes about contacts for the posted position. But 2 years later at my next job search I wasn't able to find the app nor have I been able to find it this time. So I had to move on to something else.
 
-I started this job search using an Excel spreadsheet. Excel can be pretty awesome when needed but it does kinda scream "boring" right? I looked into a different web app but decided to come up with my own workflow using Trello.
+I started this job search using an Excel spreadsheet. Excel can be pretty awesome when needed but it does kinda scream "boring" right? I looked into a different web apps but decided to come up with my own workflow using Trello.
 
 The workflow itself is very easy to set up and is fairly extensible due to the robustness of Trello.
 
@@ -31,16 +31,16 @@ Rename the first three lists to:
 Then in the text box `Add a list` let's start adding the rest of our lists.
 
 - Thank you email (Phone Interview)
-5. Waiting to hear back (Phone Interview)
-6. Formal Interview
-7. Thank you card (Formal Interview)
-8. Waiting to hear back (Formal Interview)
+- Waiting to hear back (Phone Interview)
+- Formal Interview
+- Thank you card (Formal Interview)
+- Waiting to hear back (Formal Interview)
 
 Your final list selection will look something like this: {% img /images/ListSetupTrello.png 'image' 'images' %}
 
 I've set the workflow up so that you should only have to move left to right. There might be some instances where you have a phone interview following up a formal interview or a follow-up interview after your first Formal Interview, and at that point I do move the cards back and put them through the workflow again.
 
-First let's review the lists.
+Now let's review the lists.
 
 ###Applications
 As you find a job application you want to apply for you add it to this list. I name the card `Job Title - Company`. So if I were applying for a Software Engineer position at Google the name of the card would be `Software Engineer - Google`.
