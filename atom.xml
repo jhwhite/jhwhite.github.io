@@ -4,7 +4,7 @@
   <title><![CDATA[Thoughts and Deeds]]></title>
   <link href="http://jhwhite.github.io/atom.xml" rel="self"/>
   <link href="http://jhwhite.github.io/"/>
-  <updated>2014-08-23T12:01:15-04:00</updated>
+  <updated>2014-08-23T12:01:55-04:00</updated>
   <id>http://jhwhite.github.io/</id>
   <author>
     <name><![CDATA[Jody White]]></name>
@@ -12,15 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Analysis of Storm Events on Population Health and Economic Impact]]></title>
-    <link href="http://jhwhite.github.io/blog/2014/08/14/analysis-of-storm-events-on-population-health-and-economic-impact/"/>
-    <updated>2014-08-14T19:21:19-04:00</updated>
-    <id>http://jhwhite.github.io/blog/2014/08/14/analysis-of-storm-events-on-population-health-and-economic-impact</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Tracking Job Applications Using Trello]]></title>
