@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://jhwhite.github.io/blog/2014/08/14/analysis-of-storm-events-on-population-health-and-economic-impact/</loc>
+    <lastmod>2014-08-14T19:21:19-04:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://jhwhite.github.io/blog/2014/08/14/tracking-job-applications-using-trello/</loc>
     <lastmod>2014-08-14T08:12:46-04:00</lastmod>
     <priority>0.8</priority>
@@ -11,14 +17,14 @@
   
   <url>
     <loc>http://jhwhite.github.io/blog/archives/</loc>
-    <lastmod>2014-08-14T12:06:15-04:00</lastmod>
+    <lastmod>2014-08-23T12:00:30-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://jhwhite.github.io/</loc>
-    <lastmod>2014-08-14T12:06:15-04:00</lastmod>
+    <lastmod>2014-08-23T12:00:30-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>

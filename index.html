@@ -9,7 +9,8 @@
   <meta name="author" content="Jody White">
 
   
-  <meta name="description" content="I&rsquo;ve had the unfortunate experience of being laid off recently due to a re-org of sorts. My typical response is to take a day to myself where I &hellip;">
+  <meta name="description" content="
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +78,35 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/14/analysis-of-storm-events-on-population-health-and-economic-impact/">Analysis of Storm Events on Population Health and Economic Impact</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-14T19:21:19-04:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>7:21 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -213,10 +243,43 @@ started using a web app to track the submitted applications, where I was in the 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/08/14/analysis-of-storm-events-on-population-health-and-economic-impact/">Analysis of Storm Events on Population Health and Economic Impact</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/08/14/tracking-job-applications-using-trello/">Tracking Job Applications Using Trello</a>
       </li>
     
   </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/jhwhite">@jhwhite</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jhwhite',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 
