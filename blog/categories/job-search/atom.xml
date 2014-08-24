@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Job Search | Thoughts and Deeds]]></title>
+  <title><![CDATA[Category: job search | Thoughts and Deeds]]></title>
   <link href="http://jhwhite.github.io/blog/categories/job-search/atom.xml" rel="self"/>
   <link href="http://jhwhite.github.io/"/>
-  <updated>2014-08-23T12:13:13-04:00</updated>
+  <updated>2014-08-23T23:30:52-04:00</updated>
   <id>http://jhwhite.github.io/</id>
   <author>
     <name><![CDATA[Jody White]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Tracking Job Applications Using Trello]]></title>
+    <title type="html"><![CDATA[Tracking job applications using Trello]]></title>
     <link href="http://jhwhite.github.io/blog/2014/08/14/tracking-job-applications-using-trello/"/>
     <updated>2014-08-14T08:12:46-04:00</updated>
     <id>http://jhwhite.github.io/blog/2014/08/14/tracking-job-applications-using-trello</id>
