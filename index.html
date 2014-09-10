@@ -9,7 +9,7 @@
   <meta name="author" content="Jody White">
 
   
-  <meta name="description" content="I&rsquo;ve had the unfortunate experience of being laid off recently due to a re-org of sorts. My typical response is to take a day to myself where I &hellip;">
+  <meta name="description" content="I&rsquo;ve started using nitrous.io for Rails development and learning after Rails School in Charlottesville VA started using it for their classes. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,73 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/10/installing-oh-my-zsh-on-nitrous-dot-io/">Installing Oh-my-zsh on nitrous.io</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-10T16:51:54-04:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>4:51 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&rsquo;ve started using <a href="www.nitrous.io">nitrous.io</a> for Rails development and learning after Rails School in Charlottesville VA started using it for their classes. The decision to use a cloud IDE was solidified after reading the draft chapters of Michael Hartl&rsquo;s Rails tutorial where he advocates using Cloud 9.</p>
+
+<p>On my local environment I use and have fallen in love with zsh with <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a>. So after using nitrous to write a test app I decided to see about installing oh-my-zsh and moving away from the bash prompt.</p>
+
+<p>Your nitrous box will come installed with zsh.</p>
+
+<p>You can follow these instructions to get oh-my-zsh and you only have to start at the wget step. <a href="https://gist.github.com/tsabat/1498393">Getting oh-my-zsh to work in Ubuntu</a></p>
+
+<p>Step 1:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Step 2:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>chsh -s `which zsh`</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Step 3:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Click on boxes in the top right of the nitrous IDE then click Restart on your box.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At this point if you go back into your box and at the command line type <code>rails new test-app</code> you might/should get an error <code>Couldn't find railties</code>. It basically means that rails is broke, but this is easy to fix!</p>
+
+<p>At the command line type <code>gem install rails</code>.</p>
+
+<p>After the gem is finished installing let&rsquo;s try to create our app again, <code>rails new test-app</code>. And your new app should be good to go!</p>
+
+<h2>Errors</h2>
+
+<p>It&rsquo;s possible you will get an error that bundler couldn&rsquo;t be found. Not a problem! At the command line run <code>gem install bundler</code>.</p>
+
+<h2>Wrap-up</h2>
+
+<p>oh-my-zsh is a great shell that is fun to use! Want to customize your install? You can find a list of preinstalled themes here: <a href="https://github.com/robbyrussell/oh-my-zsh/wiki/themes">oh-my-zsh themes</a>. None of those are two your liking? Make your own theme! <a href="http://code.tutsplus.com/tutorials/how-to-customize-your-command-prompt--net-24083">Customize oh-my-zsh</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -212,6 +279,10 @@ started using a web app to track the submitted applications, where I was in the 
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/10/installing-oh-my-zsh-on-nitrous-dot-io/">Installing Oh-my-zsh on nitrous.io</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/08/14/tracking-job-applications-using-trello/">Tracking Job Applications Using Trello</a>

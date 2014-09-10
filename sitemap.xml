@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://jhwhite.github.io/blog/2014/09/10/installing-oh-my-zsh-on-nitrous-dot-io/</loc>
+    <lastmod>2014-09-10T16:51:54-04:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://jhwhite.github.io/blog/2014/08/14/tracking-job-applications-using-trello/</loc>
     <lastmod>2014-08-14T08:12:46-04:00</lastmod>
     <priority>0.8</priority>
@@ -11,49 +17,49 @@
   
   <url>
     <loc>http://jhwhite.github.io/blog/archives/</loc>
-    <lastmod>2014-08-25T20:27:21-04:00</lastmod>
+    <lastmod>2014-09-10T17:20:36-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://jhwhite.github.io/</loc>
-    <lastmod>2014-08-25T20:27:21-04:00</lastmod>
+    <lastmod>2014-09-10T17:20:36-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://jhwhite.github.io/blog/</loc>
-    <lastmod>2014-08-25T20:27:21-04:00</lastmod>
+    <lastmod>2014-09-10T17:20:36-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://jhwhite.github.io/no-sidebar/right-sidebar/</loc>
-    <lastmod>2014-08-25T20:27:21-04:00</lastmod>
+    <lastmod>2014-09-10T17:20:36-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://jhwhite.github.io/no-sidebar/example-formatting/</loc>
-    <lastmod>2014-08-25T20:27:21-04:00</lastmod>
+    <lastmod>2014-09-10T17:20:36-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://jhwhite.github.io/no-sidebar/</loc>
-    <lastmod>2014-08-25T20:27:21-04:00</lastmod>
+    <lastmod>2014-09-10T17:20:36-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://jhwhite.github.io/no-sidebar/left-sidebar/</loc>
-    <lastmod>2014-08-25T20:27:21-04:00</lastmod>
+    <lastmod>2014-09-10T17:20:36-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

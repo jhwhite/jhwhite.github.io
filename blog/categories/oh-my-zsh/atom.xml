@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Oh-my-zsh | Thoughts and Deeds]]></title>
+  <link href="http://jhwhite.github.io/blog/categories/oh-my-zsh/atom.xml" rel="self"/>
+  <link href="http://jhwhite.github.io/"/>
+  <updated>2014-09-10T17:20:36-04:00</updated>
+  <id>http://jhwhite.github.io/</id>
+  <author>
+    <name><![CDATA[Jody White]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Installing Oh-my-zsh on nitrous.io]]></title>
+    <link href="http://jhwhite.github.io/blog/2014/09/10/installing-oh-my-zsh-on-nitrous-dot-io/"/>
+    <updated>2014-09-10T16:51:54-04:00</updated>
+    <id>http://jhwhite.github.io/blog/2014/09/10/installing-oh-my-zsh-on-nitrous-dot-io</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve started using <a href="www.nitrous.io">nitrous.io</a> for Rails development and learning after Rails School in Charlottesville VA started using it for their classes. The decision to use a cloud IDE was solidified after reading the draft chapters of Michael Hartl&rsquo;s Rails tutorial where he advocates using Cloud 9.</p>
+
+<p>On my local environment I use and have fallen in love with zsh with <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a>. So after using nitrous to write a test app I decided to see about installing oh-my-zsh and moving away from the bash prompt.</p>
+
+<p>Your nitrous box will come installed with zsh.</p>
+
+<p>You can follow these instructions to get oh-my-zsh and you only have to start at the wget step. <a href="https://gist.github.com/tsabat/1498393">Getting oh-my-zsh to work in Ubuntu</a></p>
+
+<p>Step 1:</p>
+
+<pre><code>wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
+</code></pre>
+
+<p>Step 2:</p>
+
+<pre><code>chsh -s `which zsh`
+</code></pre>
+
+<p>Step 3:</p>
+
+<pre><code>Click on boxes in the top right of the nitrous IDE then click Restart on your box.
+</code></pre>
+
+<p>At this point if you go back into your box and at the command line type <code>rails new test-app</code> you might/should get an error <code>Couldn't find railties</code>. It basically means that rails is broke, but this is easy to fix!</p>
+
+<p>At the command line type <code>gem install rails</code>.</p>
+
+<p>After the gem is finished installing let&rsquo;s try to create our app again, <code>rails new test-app</code>. And your new app should be good to go!</p>
+
+<h2>Errors</h2>
+
+<p>It&rsquo;s possible you will get an error that bundler couldn&rsquo;t be found. Not a problem! At the command line run <code>gem install bundler</code>.</p>
+
+<h2>Wrap-up</h2>
+
+<p>oh-my-zsh is a great shell that is fun to use! Want to customize your install? You can find a list of preinstalled themes here: <a href="https://github.com/robbyrussell/oh-my-zsh/wiki/themes">oh-my-zsh themes</a>. None of those are two your liking? Make your own theme! <a href="http://code.tutsplus.com/tutorials/how-to-customize-your-command-prompt--net-24083">Customize oh-my-zsh</a></p>
+]]></content>
+  </entry>
+  
+</feed>
