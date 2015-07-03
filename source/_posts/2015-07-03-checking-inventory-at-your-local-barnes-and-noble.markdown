@@ -15,6 +15,8 @@ I did a search for The Martian by Andy Weir, poked around the item page and the 
 
 While they only told you if the item was In Stock or not the return response provided you with quite a bit of other information! Including the number the store has on hand.
 
+{% img /images/dev_tools.png 'image' 'images' %}
+
 BN is requiring custom headers to get to the response via http but if you right click on the Name of the file in the Network tab of Dev tools you can choose `Copy as cURL`. Paste that into a terminal window and you get the json response back for that item!.
 
 ```bash
