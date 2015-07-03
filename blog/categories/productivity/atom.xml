@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Productivity | Thoughts and Deeds]]></title>
+  <link href="http://jhwhite.github.io/blog/categories/productivity/atom.xml" rel="self"/>
+  <link href="http://jhwhite.github.io/"/>
+  <updated>2015-07-03T16:05:31-04:00</updated>
+  <id>http://jhwhite.github.io/</id>
+  <author>
+    <name><![CDATA[Jody White]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Tracking Job Applications Using Trello]]></title>
+    <link href="http://jhwhite.github.io/blog/2014/08/14/tracking-job-applications-using-trello/"/>
+    <updated>2014-08-14T08:12:46-04:00</updated>
+    <id>http://jhwhite.github.io/blog/2014/08/14/tracking-job-applications-using-trello</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve had the unfortunate experience of being laid off recently due to a re-org of sorts. My typical response is to take a day to myself where I decompress from the situation, enjoy the extra time I&rsquo;ll have
+and hit the job search hard the next day.</p>
+
+<p>Other than not having a steady source of income, one of the problems I&rsquo;ve encountered is how to track my applications. The first time this happened to me I didn&rsquo;t do any real tracking. Toward the end of my job search I
+started using a web app to track the submitted applications, where I was in the process, and any notes about contacts for the posted position. But 2 years later at my next job search I wasn&rsquo;t able to find the app nor have I been able to find it this time. So I had to move on to something else.</p>
+
+<p>I started this job search using an Excel spreadsheet. Excel can be pretty awesome when needed but it does kinda scream &ldquo;boring&rdquo; right? I looked into a different web apps but decided to come up with my own workflow using Trello.</p>
+
+<p>The workflow itself is very easy to set up and is fairly extensible due to the robustness of Trello.</p>
+
+<p>Get yourself to <a href="https://trello.com/login">Trello</a> and create a free account.</p>
+
+<p>In the upper right hand corner click the <code>+</code> sign and choose New Board. Give your board a name, something descriptive.</p>
+
+<p>You&rsquo;ll see the typical Kanban lists by default. You can&rsquo;t delete a list, only archive it so you might as well rename these three lists to the first three lists we&rsquo;ll use for our tracking.</p>
+
+<p>Rename the first three lists to:</p>
+
+<ul>
+<li>Applications</li>
+<li>Application Sent</li>
+<li>Phone Interview</li>
+</ul>
+
+
+<p>Then in the text box <code>Add a list</code> let&rsquo;s start adding the rest of our lists.</p>
+
+<ul>
+<li>Thank you email (Phone Interview)</li>
+<li>Waiting to hear back (Phone Interview)</li>
+<li>Formal Interview</li>
+<li>Thank you card (Formal Interview)</li>
+<li>Waiting to hear back (Formal Interview)</li>
+</ul>
+
+
+<p>Your final list selection will look something like this: <img src="/images/ListSetupTrello.png" title="&lsquo;image&rsquo; &lsquo;images&rsquo;" ></p>
+
+<p>I&rsquo;ve set the workflow up so that you should only have to move left to right. There might be some instances where you have a phone interview following up a formal interview or a follow-up interview after your first Formal Interview, and at that point I do move the cards back and put them through the workflow again.</p>
+
+<p>Now let&rsquo;s review the lists.</p>
+
+<h3>Applications</h3>
+
+<p>As you find a job application you want to apply for you add it to this list. I name the card <code>Job Title - Company</code>. So if I were applying for a Software Engineer position at Google the name of the card would be <code>Software Engineer - Google</code>.</p>
+
+<p>I then take the job description and paste it into the Description of the card.
+<img src="/images/jobDesc.png" title="&lsquo;image&rsquo; &lsquo;images&rsquo;" ></p>
+
+<h3>Application Sent</h3>
+
+<p>When I&rsquo;ve finished writing an employer specific cover letter and finished tweaking my resume for that employer I submit the documents. At this point I move the card from <code>Applications</code> to <code>Application Sent</code>. The move will record the time and date of the submission but I go ahead and add a comment to the card with the <strong>Applied Date</strong> and with a link to the URL if I found the job online somewhere.</p>
+
+<h3>Phone Interview</h3>
+
+<p>More times than not the first step in the interview process is a phone interview. When I&rsquo;m contacted for a phone interview I change the due date on the card to the time and date of the interview. Then I move the card from <code>Application Sent</code> to <code>Phone Interview</code>.</p>
+
+<p>After speaking with the employer I add whatever information I&rsquo;ve gleaned from the conversation to the comment section of the card. I also add any contact information I&rsquo;ve collected and I move the card from <code>Phone Interview</code> to <code>Thank you email (Phone Interview)</code>. I also delete the due date on the card.</p>
+
+<h3>Thank you email (Phone Interview)</h3>
+
+<p>It&rsquo;s always good practice to follow up any kind of interview with a Thank You. So there&rsquo;s a list specifically for proper interview etiquette. After I&rsquo;ve sent the thank you email I move the card forward to <code>Waiting to hear back (Phone Interview)</code></p>
+
+<h3>Waiting to hear back (Phone Interview)</h3>
+
+<p>Sometimes there&rsquo;s no special information to add here. If I have contact information for the employer I will add a due date to the card so I can have a reminder to follow-up with them. Or if the employer gives me a timeline I will add that timeline to the due date so I can know when to expect to hear back from them and follow-up if I don&rsquo;t.</p>
+
+<p>Unfortunately, sometimes I don&rsquo;t hear anything back from this list and archive the card. I&rsquo;m an optimist so I feel keeping the card in this list for a month is enough time to hear back from someone. If I don&rsquo;t hear back after a month I archive.</p>
+
+<h3>Formal Interview</h3>
+
+<p>Great! We&rsquo;ve been called in to meet face to face! I move the card from <code>Waiting to hear back (Phone Interview)</code> to this list, set or change the due date to the date and time of the interview, add whatever comments in the section that is applicable for the formal interview and start preparing!</p>
+
+<h3>Thank you card (Formal Interview)</h3>
+
+<p>Once you&rsquo;re home and your nerves have settled down move the card from <code>Formal Interview</code> to <code>Thank you card (Formal Interview)</code>. Remove any due dates and add any and all notes you&rsquo;ve taken from the formal interview to the comments section of the card.</p>
+
+<p>We&rsquo;re back to best practices for interviewing! If you&rsquo;ve been called in to an interview the employer deserves more than just an email. Get the business cards of everyone that has spoken with you. If the company is within reasonable driving distance of you then you might want to consider dropping the thank you cards off at the front desk. Otherwise, do this the old fashioned way and buy some stamps and mail them in!</p>
+
+<h3>Waiting to hear back (Formal Interview)</h3>
+
+<p>After you&rsquo;ve mailed or dropped off your Thank You Cards you can move the card for the job from <code>Thank you card (Formal Interview)</code> to <code>Waiting to hear back (Formal Interview)</code>. This can follow the same rules as <code>Waiting to hear back (Phone Interview)</code>. Set up a due date if you want to follow-up or if you were given a time line by the employer. It&rsquo;s rare to not hear back from an employer at this stage, although it has happened to me once.</p>
+
+<p>When you&rsquo;ve heard back from the employer and in the unfortunate scenario they&rsquo;re moving forward with another candidate, add a note to the comment section on the final decision, date it, and archive the card.</p>
+
+<p><strong>Do not delete the card as you will want to keep the contact information and notes in case you apply in the future. Or if the employer reaches out to you again.</strong></p>
+
+<h2>Notes</h2>
+
+<p>So I&rsquo;ve gone through a few iterations of this workflow and this is what works for me. If you like this but it doesn&rsquo;t quite work for you&hellip;tweak it!</p>
+
+<p>One of the things I tried earlier was to only have one <code>Waiting to hear back</code> list. Then I would use Labels to note what I was waiting to hear back from. I also included <code>Application Sent</code> in that list since I was waiting to hear back about my initial resume submission. But then I would move cards forward then back, then forward again. What I like about the above workflow is that for the most part it moves left to right and I can more easily see which stage the application is in.</p>
+
+<p>An idea I have that I plan on doing unless someone beats me to it, and if someone wants to then please be my guest, is to create a Trello clipper extension for a browser that will clip the Job Title and Job Description from an online job posting and send that directly to Trello as the Card Title and Card Description.</p>
+]]></content>
+  </entry>
+  
+</feed>
