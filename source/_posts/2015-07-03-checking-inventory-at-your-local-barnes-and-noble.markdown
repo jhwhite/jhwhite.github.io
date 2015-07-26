@@ -1,9 +1,10 @@
 ---
 layout: post
-title: ""Checking inventory at your local Barnes and Noble""
+title: "Checking inventory at your local Barnes and Noble"
 date: 2015-07-03 14:49:10 -0400
 comments: true
-categories: Python
+categories: [Python]
+author: Jody White
 ---
 Does anyone really shop or buy at local brick & mortar stores anymore? No? Well, this was still a fun app to make.
 
