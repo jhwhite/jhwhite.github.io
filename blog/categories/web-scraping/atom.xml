@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Web-scraping | Thoughts and Deeds]]></title>
+  <link href="http://jhwhite.github.io/blog/categories/web-scraping/atom.xml" rel="self"/>
+  <link href="http://jhwhite.github.io/"/>
+  <updated>2015-11-28T19:14:47-05:00</updated>
+  <id>http://jhwhite.github.io/</id>
+  <author>
+    <name><![CDATA[Jody White]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Want to Get Email Updates From a Strore That Doesn't Provide Them?]]></title>
+    <link href="http://jhwhite.github.io/blog/2015/11/28/want-to-get-email-updates-from-a-strore-that-doesnt-provide-them/"/>
+    <updated>2015-11-28T15:29:53-05:00</updated>
+    <id>http://jhwhite.github.io/blog/2015/11/28/want-to-get-email-updates-from-a-strore-that-doesnt-provide-them</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve been curious about learning leathercrafting for a a while now but I haven&rsquo;t known where to start. I was suggested to check out a Society for Creative Anachronism but I couldn&rsquo;t find anything local.</p>
+
+<p>I found the very helpful <a href="https://www.reddit.com/r/leathercraft">Leathercraft subreddit</a> and through them I discovered Tandy Leather.</p>
+
+<p>The cool thing about Tandy Leather is they provide classes on leatherworking! Some are free and some cost money but they are priced reasonably. A listing of their stores and the upcoming classes are found at <a href="http://www.tandyleather.com/en/leathercraft-classes.">http://www.tandyleather.com/en/leathercraft-classes.</a></p>
+
+<p>Tandy does have an email but it&rsquo;s not store specific so I won&rsquo;t get the upcoming courses for the store closest to me (Richmond, VA). There is way to solve this though!</p>
+
+<p>We&rsquo;re going to scrape the page, grab the information for the Richmond store, email it to ourselves, and keep the script on an internet connected server that will allow us to set a cron job to run this weekly.</p>
+
+<p>We&rsquo;ll review how to do this in Python and Ruby.</p>
+
+<h2>Python</h2>
+
+<p>The script for this is very short and easy. For scraping we&rsquo;re going to use BeautifulSoup. And to email the results to ourselves we&rsquo;re going to use Mandrill.</p>
+
+<p>We&rsquo;re going to use the great <code>requests</code> library to make the connection to the page then put the response into a BeautifulSoup object.</p>
+
+<p>At a command line (preferably in a virtualenv) let&rsquo;s install what we need for now.</p>
+
+<pre><code class="bash">pip3 install beautifulsoup4
+pip3 requests
+pip3 html5lib
+</code></pre>
+
+<p>Then in our script let&rsquo;s add:</p>
+
+<pre><code class="python">import requests
+import html5lib
+from bs4 import BeautifulSoup
+
+# using the html5lib parser instead of the typical 
+# html.parser
+soup = BeautifulSoup(r.text, 'html5lib')
+</code></pre>
+
+<p>Next we want to find the Richmond information on the page. The html for that looks like:</p>
+
+<p>&#8220;`html
+    <a name="id_631"></a></p>
+
+<pre><code>&lt;hr&gt;
+
+&lt;div class="store-class"&gt;
+            &lt;div&gt;
+        &lt;span&gt;&lt;strong&gt;Richmond, VA #138 Leathercraft Classes&lt;/strong&gt;&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;div class="store-class-content"&gt;&lt;p&gt;
+November 28, 2015 9:00A.M. - 4:00P.M.&lt;/p&gt;
+</code></pre>
+
+<p>
+    Black Friday Sale! No class. Look for our E-mail Blast, give us a call, or stop in the store early to check out our pre black Friday specials.</p>
+
+
+<p>
+    &nbsp;</p>
+
+
+<p>
+    December 5, 2015 10:00 A.M. - 1:00 P.M.</p>
+
+
+<p>
+    Shadow Box: Come join us as we will be making a creative display case for small knickknacks, keepsakes, or leave them empty for use as wall decorations. We&rsquo;ll be cutting, forming, and adding your own personal flair to these elegant boxes.</p>
+
+
+<p>
+    Cost: Retail $25, Gold/Elite $20</p>
+
+
+<p>
+    &nbsp;</p>
+
+
+<p>
+    December 12, 2015 10:00 A.M. &ndash; 1:00 P.M.</p>
+
+
+<p>
+    Basic Carving: Have you recently starting or want to begin carving/tooling leather? Learn what the Basic 7 tools are and how to use them. We&rsquo;ll be carving a Sheridan style flower, which will utilize all seven tools.</p>
+
+
+<p>
+    Cost: Free</p>
+
+
+<p>
+    &nbsp;</p>
+
+
+<p>
+    December 19, 2015 10:00 A.M. &ndash; 12:00 P.M.</p>
+
+
+<p>
+    Valet Tray: need somewhere to toss your keys or change at the end of a long day? A leather Valet tray is the perfect solution. This classy catchall for the bedroom night stand or hallway/living room table. Personalize to make it your own. We&rsquo;ll be using snaps on it so it&rsquo;ll lay flat when not in use.</p>
+
+
+<p>
+    Cost: Retail $25, Gold/Elite $20</p>
+
+
+<p>
+    &nbsp;</p>
+
+
+<p>
+    On December 18 &amp; 19, join us for our first Super Saturday Sale. Everything in the store will be on sale. You really don&rsquo;t want to miss this.</p>
+
+
+<p></div></p>
+
+<pre><code>    &lt;div&gt;
+        Please contact store for class details.&lt;br&gt;
+        Richmond138@tandyleather.com&lt;br&gt;
+        Phone: 804-750-9970&lt;br&gt;
+        Toll Free: 866-755-7090&lt;br&gt;
+        9045 W. Broad St, #130&lt;br&gt;
+        Henrico, VA 23294&lt;br&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<pre><code>Looking at the html the only identifier for the Richmond block is `&lt;a name="id_631"&gt;&lt;/a&gt;` which doesn't exist in the class store-class and there is no unique identifier for Richmond inside the `div.store-class` So what we have to do is identify the `name="id_631"` then grab the next `div` whose class is `store-class`.
+
+We can do that with one line of code courtesy of BeautifulSoup.
+</code></pre>
+
+<p>rva = soup.find(&ldquo;a&rdquo;, attrs={&ldquo;name&rdquo;: &ldquo;id_631&rdquo;}).find_next_sibling(&ldquo;div&rdquo;, class_=&ldquo;store-class&rdquo;)
+<code>``
+That line finds the</code>a<code>whose</code>name<code>is</code>id_631<code>then finds the next sibling that is a</code>div<code>whose</code>class<code>is</code>store-class`.</p>
+
+<p>And that will give us the entire div with all of the information we want!</p>
+
+<p>But there is a caveat. The object is a BeautifulSoup object so we&rsquo;re going to need to convert that to a string.</p>
+
+<pre><code class="python">rva = str(rva)
+</code></pre>
+
+<p>That&rsquo;s it!</p>
+
+<p>We&rsquo;ve got the information now we just need to get it to us.</p>
+
+<p>For that I&rsquo;m using Mandrill. Mandrill is a transaction email service made by Mailchimp. Just like MailChimp there is a free tier that will be more than enough for us.</p>
+
+<p>Go to Mandrill, sign up, and get developer key.</p>
+
+<p>At a command line let&rsquo;s install the mandrill library.</p>
+
+<pre><code class="bash">pip3 install mandrill
+</code></pre>
+
+<p>Now to make our connection:</p>
+
+<pre><code class="python">mandrill_client = mandrill.Mandrill("ENTER_API_KEY")
+</code></pre>
+
+<p>And let&rsquo;s build out our message.</p>
+
+<pre><code class="json">message = {
+    'html': rva,
+    'subject': 'Upcoming classes at Tandy Leather',
+    'from_email': 'ENTER_FROM_EMAIL_ADDRESS',
+    'to': [{'email': 'ENTER_TO_EMAIL_ADDRESS'}]
+}
+</code></pre>
+
+<p>What we&rsquo;re doing here is setting the html body of the message to the information we scraped from the web page. We give our email a subject, set the from email address, and the to.</p>
+
+<p>Then we make a call to messages.send:</p>
+
+<pre><code class="python">result = mandrill_client.messages.send(message=message)
+</code></pre>
+
+<p>There is a return result so if you don&rsquo;t get the email you can output <code>result</code> and see what error you received.</p>
+
+<p>Our final script looks like this:</p>
+
+<pre><code class="python">#!/Users/jwhite/python_projects/tandyleather/env-tandyleather/bin/python
+
+import requests
+import html5lib
+import mandrill
+from bs4 import BeautifulSoup
+
+mandrill_client = mandrill.Mandrill("ENTER_API_KEY")
+
+r = requests.get("http://www.tandyleather.com/en/leathercraft-classes")
+
+soup = BeautifulSoup(r.text, 'html5lib')
+
+rva = soup.find("a", attrs={"name": "id_631"}).find_next_sibling("div", class_="store-class")
+
+rva = str(rva)
+
+message = {
+    'html': rva,
+    'subject': 'Upcoming classes at Tandy Leather',
+    'from_email': 'ENTER_FROM_EMAIL_ADDRESS',
+    'to': [{'email': 'ENTER_TO_EMAIL_ADDRESS'}]
+}
+
+result = mandrill_client.messages.send(message=message)
+</code></pre>
+
+<p>Notice I did include the location for where our python is located. This is required on our server to set a cron job to automatically email ourselves the information.</p>
+
+<p>A cron tutorial is a little outside the scope of this post.</p>
+
+<p>I did promise to show how to do this in Ruby also didn&rsquo;t I?</p>
+
+<h2>Ruby</h2>
+
+<p>The Ruby script is VERY similar to the Python version.</p>
+
+<p>We&rsquo;re going to need to install the following gems:</p>
+
+<pre><code class="bash">gem install mandrill-api
+gem install httparty
+gem install nokogiri
+</code></pre>
+
+<p>We then require our libraries:</p>
+
+<pre><code class="ruby">require 'mandrill'
+require 'nokogiri'
+require 'httparty'
+</code></pre>
+
+<p>We use httparty to get the page:</p>
+
+<pre><code class="ruby">response = HTTParty.get('http://www.tandyleather.com/en/leathercraft-classes')
+</code></pre>
+
+<p>Put that into a nokogiri object:</p>
+
+<pre><code class="ruby">doc = Nokogiri::HTML(response.body)
+</code></pre>
+
+<p>Create our connection to mandrill</p>
+
+<pre><code class="ruby">mandrill = Mandrill::API.new 'API_KEY'
+</code></pre>
+
+<p>We find the section we&rsquo;re looking for, create a new empty string to hold the information, but then there&rsquo;s an extra step with nokogiri.</p>
+
+<pre><code class="ruby">id_631 = doc.css("a").select{|link| link['name'] == 'id_631'}
+
+rva = ''
+
+id_631.each do |item|
+  hr = item.next_element
+  rva = hr.next_element.inner_html
+end
+</code></pre>
+
+<p>We have to loop over our id_631 to get the next element, but that&rsquo;s an <code>&lt;hr&gt;</code>, so we have to get the next element after that which is the <code>div.store-class</code>.</p>
+
+<p>We build the message the same way as before but using Ruby hashrocket syntax.</p>
+
+<pre><code class="ruby">message = {
+  "html" =&gt; rva,
+  "subject" =&gt; "Upcoming classes at Tandy Leather",
+  "from_name" =&gt; "Jody White",
+  "to" =&gt; [{"email" =&gt; TO_EMAIL}],
+  "from_email" =&gt; FROM_EMAIL
+}
+</code></pre>
+
+<p>Then make the call to mandrill to send.</p>
+
+<pre><code class="ruby">result = mandrill.messages.send message
+</code></pre>
+
+<p>The entire script is:</p>
+
+<pre><code class="ruby">#!/Users/jwhite/.rbenv/shims/ruby
+
+require 'mandrill'
+require 'nokogiri'
+require 'httparty'
+
+response = HTTParty.get('http://www.tandyleather.com/en/leathercraft-classes')
+
+doc = Nokogiri::HTML(response.body)
+
+mandrill = Mandrill::API.new 'API_KEY'
+
+id_631 = doc.css("a").select{|link| link['name'] == 'id_631'}
+
+rva = ''
+
+id_631.each do |item|
+  hr = item.next_element
+  rva = hr.next_element.inner_html
+end
+
+message = {
+  "html" =&gt; rva,
+  "subject" =&gt; "Upcoming classes at Tandy Leather",
+  "from_name" =&gt; "Jody White",
+  "to" =&gt; [{"email" =&gt; TO_EMAIL}],
+  "from_email" =&gt; FROM_EMAIL
+}
+
+result = mandrill.messages.send message
+</code></pre>
+
+<p>And that&rsquo;s it!</p>
+
+<h2>Summary</h2>
+
+<p>This was a quick and fun project to put together. And useful! I set my cron job to run every Sunday morning at 8am. I tested out my cron job and it was working when I set it a minute into the future, but the real test will be tomorrow morning!</p>
+]]></content>
+  </entry>
+  
+</feed>

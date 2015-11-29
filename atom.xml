@@ -4,7 +4,7 @@
   <title><![CDATA[Thoughts and Deeds]]></title>
   <link href="http://jhwhite.github.io/atom.xml" rel="self"/>
   <link href="http://jhwhite.github.io/"/>
-  <updated>2015-11-28T09:23:13-05:00</updated>
+  <updated>2015-11-28T19:14:47-05:00</updated>
   <id>http://jhwhite.github.io/</id>
   <author>
     <name><![CDATA[Jody White]]></name>
@@ -12,6 +12,468 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Want to Get Email Updates From a Strore That Doesn't Provide Them?]]></title>
+    <link href="http://jhwhite.github.io/blog/2015/11/28/want-to-get-email-updates-from-a-strore-that-doesnt-provide-them/"/>
+    <updated>2015-11-28T15:29:53-05:00</updated>
+    <id>http://jhwhite.github.io/blog/2015/11/28/want-to-get-email-updates-from-a-strore-that-doesnt-provide-them</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve been curious about learning leathercrafting for a a while now but I haven&rsquo;t known where to start. I was suggested to check out a Society for Creative Anachronism but I couldn&rsquo;t find anything local.</p>
+
+<p>I found the very helpful <a href="https://www.reddit.com/r/leathercraft">Leathercraft subreddit</a> and through them I discovered Tandy Leather.</p>
+
+<p>The cool thing about Tandy Leather is they provide classes on leatherworking! Some are free and some cost money but they are priced reasonably. A listing of their stores and the upcoming classes are found at <a href="http://www.tandyleather.com/en/leathercraft-classes.">http://www.tandyleather.com/en/leathercraft-classes.</a></p>
+
+<p>Tandy does have an email but it&rsquo;s not store specific so I won&rsquo;t get the upcoming courses for the store closest to me (Richmond, VA). There is way to solve this though!</p>
+
+<p>We&rsquo;re going to scrape the page, grab the information for the Richmond store, email it to ourselves, and keep the script on an internet connected server that will allow us to set a cron job to run this weekly.</p>
+
+<p>We&rsquo;ll review how to do this in Python and Ruby.</p>
+
+<h2>Python</h2>
+
+<p>The script for this is very short and easy. For scraping we&rsquo;re going to use BeautifulSoup. And to email the results to ourselves we&rsquo;re going to use Mandrill.</p>
+
+<p>We&rsquo;re going to use the great <code>requests</code> library to make the connection to the page then put the response into a BeautifulSoup object.</p>
+
+<p>At a command line (preferably in a virtualenv) let&rsquo;s install what we need for now.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>pip3 install beautifulsoup4
+</span><span class='line'>pip3 requests
+</span><span class='line'>pip3 html5lib
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then in our script let&rsquo;s add:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">requests</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">html5lib</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># using the html5lib parser instead of the typical </span>
+</span><span class='line'><span class="c"># html.parser</span>
+</span><span class='line'><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s">&#39;html5lib&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next we want to find the Richmond information on the page. The html for that looks like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;a</span> <span class="na">name=</span><span class="s">&quot;id_631&quot;</span><span class="nt">&gt;&lt;/a&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;hr&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;store-class&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;div&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;span&gt;&lt;strong&gt;</span>Richmond, VA #138 Leathercraft Classes<span class="nt">&lt;/strong&gt;&lt;/span&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;store-class-content&quot;</span><span class="nt">&gt;&lt;p&gt;</span>
+</span><span class='line'>November 28, 2015 9:00A.M. - 4:00P.M.<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span><span class='line'>Black Friday Sale! No class. Look for our E-mail Blast, give us a call, or stop in the store early to check out our pre black Friday specials.<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span><span class='line'><span class="ni">&amp;nbsp;</span><span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span><span class='line'>December 5, 2015 10:00 A.M. - 1:00 P.M.<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span><span class='line'>Shadow Box: Come join us as we will be making a creative display case for small knickknacks, keepsakes, or leave them empty for use as wall decorations. We<span class="ni">&amp;rsquo;</span>ll be cutting, forming, and adding your own personal flair to these elegant boxes.<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span><span class='line'>Cost: Retail $25, Gold/Elite $20<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span><span class='line'><span class="ni">&amp;nbsp;</span><span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span><span class='line'>December 12, 2015 10:00 A.M. <span class="ni">&amp;ndash;</span> 1:00 P.M.<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span><span class='line'>Basic Carving: Have you recently starting or want to begin carving/tooling leather? Learn what the Basic 7 tools are and how to use them. We<span class="ni">&amp;rsquo;</span>ll be carving a Sheridan style flower, which will utilize all seven tools.<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span><span class='line'>Cost: Free<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span><span class='line'><span class="ni">&amp;nbsp;</span><span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span><span class='line'>December 19, 2015 10:00 A.M. <span class="ni">&amp;ndash;</span> 12:00 P.M.<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span><span class='line'>Valet Tray: need somewhere to toss your keys or change at the end of a long day? A leather Valet tray is the perfect solution. This classy catchall for the bedroom night stand or hallway/living room table. Personalize to make it your own. We<span class="ni">&amp;rsquo;</span>ll be using snaps on it so it<span class="ni">&amp;rsquo;</span>ll lay flat when not in use.<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span><span class='line'>Cost: Retail $25, Gold/Elite $20<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span><span class='line'><span class="ni">&amp;nbsp;</span><span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span><span class='line'>On December 18 <span class="ni">&amp;amp;</span> 19, join us for our first Super Saturday Sale. Everything in the store will be on sale. You really don<span class="ni">&amp;rsquo;</span>t want to miss this.<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;div&gt;</span>
+</span><span class='line'>      Please contact store for class details.<span class="nt">&lt;br&gt;</span>
+</span><span class='line'>      Richmond138@tandyleather.com<span class="nt">&lt;br&gt;</span>
+</span><span class='line'>      Phone: 804-750-9970<span class="nt">&lt;br&gt;</span>
+</span><span class='line'>      Toll Free: 866-755-7090<span class="nt">&lt;br&gt;</span>
+</span><span class='line'>      9045 W. Broad St, #130<span class="nt">&lt;br&gt;</span>
+</span><span class='line'>      Henrico, VA 23294<span class="nt">&lt;br&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Looking at the html the only identifier for the Richmond block is <code>&lt;a name="id_631"&gt;&lt;/a&gt;</code> which doesn&rsquo;t exist in the class store-class and there is no unique identifier for Richmond inside the <code>div.store-class</code> So what we have to do is identify the <code>name="id_631"</code> then grab the next <code>div</code> whose class is <code>store-class</code>.</p>
+
+<p>We can do that with one line of code courtesy of BeautifulSoup.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">rva</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;id_631&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">find_next_sibling</span><span class="p">(</span><span class="s">&quot;div&quot;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">&quot;store-class&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That line finds the <code>a</code> whose <code>name</code> is <code>id_631</code> then finds the next sibling that is a <code>div</code> whose <code>class</code> is <code>store-class</code>.</p>
+
+<p>And that will give us the entire div with all of the information we want!</p>
+
+<p>But there is a caveat. The object is a BeautifulSoup object so we&rsquo;re going to need to convert that to a string.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">rva</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">rva</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&rsquo;s it!</p>
+
+<p>We&rsquo;ve got the information now we just need to get it to us.</p>
+
+<p>For that I&rsquo;m using Mandrill. Mandrill is a transaction email service made by Mailchimp. Just like MailChimp there is a free tier that will be more than enough for us.</p>
+
+<p>Go to Mandrill, sign up, and get developer key.</p>
+
+<p>At a command line let&rsquo;s install the mandrill library.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>pip3 install mandrill
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now to make our connection:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">mandrill_client</span> <span class="o">=</span> <span class="n">mandrill</span><span class="o">.</span><span class="n">Mandrill</span><span class="p">(</span><span class="s">&quot;ENTER_API_KEY&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And let&rsquo;s build out our message.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="err">message</span> <span class="err">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="err">&#39;html&#39;:</span> <span class="err">rva,</span>
+</span><span class='line'>  <span class="err">&#39;subject&#39;:</span> <span class="err">&#39;Upcoming</span> <span class="err">classes</span> <span class="err">at</span> <span class="err">Tandy</span> <span class="err">Leather&#39;,</span>
+</span><span class='line'>  <span class="err">&#39;from_email&#39;:</span> <span class="err">&#39;ENTER_FROM_EMAIL_ADDRESS&#39;,</span>
+</span><span class='line'>  <span class="err">&#39;to&#39;:</span> <span class="err">[{&#39;email&#39;:</span> <span class="err">&#39;ENTER_TO_EMAIL_ADDRESS&#39;</span><span class="p">}</span><span class="err">]</span>
+</span><span class='line'><span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What we&rsquo;re doing here is setting the html body of the message to the information we scraped from the web page. We give our email a subject, set the from email address, and the to.</p>
+
+<p>Then we make a call to messages.send:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">result</span> <span class="o">=</span> <span class="n">mandrill_client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There is a return result so if you don&rsquo;t get the email you can output <code>result</code> and see what error you received.</p>
+
+<p>Our final script looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/Users/jwhite/python_projects/tandyleather/env-tandyleather/bin/python</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">requests</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">html5lib</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">mandrill</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">mandrill_client</span> <span class="o">=</span> <span class="n">mandrill</span><span class="o">.</span><span class="n">Mandrill</span><span class="p">(</span><span class="s">&quot;ENTER_API_KEY&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.tandyleather.com/en/leathercraft-classes&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s">&#39;html5lib&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">rva</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;id_631&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">find_next_sibling</span><span class="p">(</span><span class="s">&quot;div&quot;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">&quot;store-class&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">rva</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">rva</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">message</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="s">&#39;html&#39;</span><span class="p">:</span> <span class="n">rva</span><span class="p">,</span>
+</span><span class='line'>  <span class="s">&#39;subject&#39;</span><span class="p">:</span> <span class="s">&#39;Upcoming classes at Tandy Leather&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s">&#39;from_email&#39;</span><span class="p">:</span> <span class="s">&#39;ENTER_FROM_EMAIL_ADDRESS&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s">&#39;to&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;email&#39;</span><span class="p">:</span> <span class="s">&#39;ENTER_TO_EMAIL_ADDRESS&#39;</span><span class="p">}]</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">result</span> <span class="o">=</span> <span class="n">mandrill_client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Notice I did include the location for where our python is located. This is required on our server to set a cron job to automatically email ourselves the information.</p>
+
+<p>A cron tutorial is a little outside the scope of this post.</p>
+
+<p>I did promise to show how to do this in Ruby also didn&rsquo;t I?</p>
+
+<h2>Ruby</h2>
+
+<p>The Ruby script is VERY similar to the Python version.</p>
+
+<p>We&rsquo;re going to need to install the following gems:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>gem install mandrill-api
+</span><span class='line'>gem install httparty
+</span><span class='line'>gem install nokogiri
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We then require our libraries:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;mandrill&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;nokogiri&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;httparty&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We use httparty to get the page:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">response</span> <span class="o">=</span> <span class="no">HTTParty</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://www.tandyleather.com/en/leathercraft-classes&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Put that into a nokogiri object:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">doc</span> <span class="o">=</span> <span class="no">Nokogiri</span><span class="o">::</span><span class="no">HTML</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create our connection to mandrill</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">mandrill</span> <span class="o">=</span> <span class="no">Mandrill</span><span class="o">::</span><span class="no">API</span><span class="o">.</span><span class="n">new</span> <span class="s1">&#39;API_KEY&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We find the section we&rsquo;re looking for, create a new empty string to hold the information, but then there&rsquo;s an extra step with nokogiri.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">id_631</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">{</span><span class="o">|</span><span class="n">link</span><span class="o">|</span> <span class="n">link</span><span class="o">[</span><span class="s1">&#39;name&#39;</span><span class="o">]</span> <span class="o">==</span> <span class="s1">&#39;id_631&#39;</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">rva</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">id_631</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">item</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">hr</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">next_element</span>
+</span><span class='line'>  <span class="n">rva</span> <span class="o">=</span> <span class="n">hr</span><span class="o">.</span><span class="n">next_element</span><span class="o">.</span><span class="n">inner_html</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We have to loop over our id_631 to get the next element, but that&rsquo;s an <code>&lt;hr&gt;</code>, so we have to get the next element after that which is the <code>div.store-class</code>.</p>
+
+<p>We build the message the same way as before but using Ruby hashrocket syntax.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">message</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="s2">&quot;html&quot;</span> <span class="o">=&gt;</span> <span class="n">rva</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;subject&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Upcoming classes at Tandy Leather&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;from_name&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Jody White&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;to&quot;</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="p">{</span><span class="s2">&quot;email&quot;</span> <span class="o">=&gt;</span> <span class="no">TO_EMAIL</span><span class="p">}</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;from_email&quot;</span> <span class="o">=&gt;</span> <span class="no">FROM_EMAIL</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then make the call to mandrill to send.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">result</span> <span class="o">=</span> <span class="n">mandrill</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">send</span> <span class="n">message</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The entire script is:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/Users/jwhite/.rbenv/shims/ruby</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;mandrill&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;nokogiri&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;httparty&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">response</span> <span class="o">=</span> <span class="no">HTTParty</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://www.tandyleather.com/en/leathercraft-classes&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">doc</span> <span class="o">=</span> <span class="no">Nokogiri</span><span class="o">::</span><span class="no">HTML</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">mandrill</span> <span class="o">=</span> <span class="no">Mandrill</span><span class="o">::</span><span class="no">API</span><span class="o">.</span><span class="n">new</span> <span class="s1">&#39;API_KEY&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">id_631</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">{</span><span class="o">|</span><span class="n">link</span><span class="o">|</span> <span class="n">link</span><span class="o">[</span><span class="s1">&#39;name&#39;</span><span class="o">]</span> <span class="o">==</span> <span class="s1">&#39;id_631&#39;</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">rva</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">id_631</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">item</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">hr</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">next_element</span>
+</span><span class='line'>  <span class="n">rva</span> <span class="o">=</span> <span class="n">hr</span><span class="o">.</span><span class="n">next_element</span><span class="o">.</span><span class="n">inner_html</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">message</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="s2">&quot;html&quot;</span> <span class="o">=&gt;</span> <span class="n">rva</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;subject&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Upcoming classes at Tandy Leather&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;from_name&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Jody White&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;to&quot;</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="p">{</span><span class="s2">&quot;email&quot;</span> <span class="o">=&gt;</span> <span class="no">TO_EMAIL</span><span class="p">}</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;from_email&quot;</span> <span class="o">=&gt;</span> <span class="no">FROM_EMAIL</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">result</span> <span class="o">=</span> <span class="n">mandrill</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">send</span> <span class="n">message</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And that&rsquo;s it!</p>
+
+<h2>Summary</h2>
+
+<p>This was a quick and fun project to put together. And useful! I set my cron job to run every Sunday morning at 8am. I tested out my cron job and it was working when I set it a minute into the future, but the real test will be tomorrow morning!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Horrible Best Buy Experience]]></title>
