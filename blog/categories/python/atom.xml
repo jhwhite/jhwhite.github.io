@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | Thoughts and Deeds]]></title>
   <link href="http://jhwhite.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://jhwhite.github.io/"/>
-  <updated>2015-11-29T15:30:00-05:00</updated>
+  <updated>2015-12-13T12:19:05-05:00</updated>
   <id>http://jhwhite.github.io/</id>
   <author>
     <name><![CDATA[Jody White]]></name>
@@ -12,6 +12,110 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Sending New Subreddit Posts to a Slack Channel]]></title>
+    <link href="http://jhwhite.github.io/blog/2015/12/13/sending-new-subreddit-posts-to-a-slack-channel/"/>
+    <updated>2015-12-13T11:04:39-05:00</updated>
+    <id>http://jhwhite.github.io/blog/2015/12/13/sending-new-subreddit-posts-to-a-slack-channel</id>
+    <content type="html"><![CDATA[<p><strong>This is my first time using Praw so when I was reading up on how to use it I came across <a href="http://pythonforengineers.com/build-a-reddit-bot-part-1/">Build a reddit bot</a> that was pretty much what I wanted. So I used most of their code for the Reddit side of things.</strong></p>
+
+<p>You can find the source for this on Github: <a href="https://github.com/jhwhite/reddit-slackbot">Reddit Slack Bot</a></p>
+
+<p>I recently became the moderator of the <a href="www.reddit.com/r/learnrubyonrails">Learn Ruby on Rails</a> subreddit. I want to build out the subreddit and add relevant information on setting up a dev environment, Ruby and Rails tutorials, and foster a community of learning.</p>
+
+<p>To that end I created a free slack team for the subreddit so teachers and learners could come together. <a href="https://learnrubyonrails-slack.herokuapp.com/">Invite yourself to our Slack team!</a></p>
+
+<p>(I wrote this script in Python and yes, I get the irony of using Python for a Ruby based subreddit.) :)</p>
+
+<p>I thought it would be a good idea to have posts made to the subreddit show up in the Slack channel. I&rsquo;ve seen the equivalent for subreddits that have IRC channels and I didn&rsquo;t think it would be very hard to accomplish. And it really wasn&rsquo;t. Less than 50 lines of code!</p>
+
+<p>There&rsquo;s two libraries we&rsquo;re going to need to install via pip.</p>
+
+<pre><code class="bash">pip install praw
+pip install slackclient
+</code></pre>
+
+<p>We&rsquo;re also going to need the os library but that&rsquo;s a core part of Python, so nothing to install there.</p>
+
+<p>After we&rsquo;ve installed those via pip we can start our script.</p>
+
+<p><strong>Import them into our script</strong></p>
+
+<pre><code class="python">import praw
+import os
+from slackclient import SlackClient
+</code></pre>
+
+<p><strong>Connect to slack</strong></p>
+
+<p>For this we&rsquo;ll need a token. You can create an API token for your team in your Slack settings.</p>
+
+<pre><code class="python">token = "SLACK_API_TOKEN"
+sc = SlackClient(token)
+</code></pre>
+
+<p><strong>Create user agent for Reddit api</strong></p>
+
+<p>Reddit requires you to give the name of a user agent to connect with. It can pretty much be anything (I think) so I gave mine a fairly descriptive name.</p>
+
+<pre><code class="python">user_agent = ("LearnRoR-Slack Bot 0.1")
+</code></pre>
+
+<p><strong>Create connection to reddit</strong></p>
+
+<pre><code class="python">r = praw.Reddit(user_agent = user_agent)
+</code></pre>
+
+<p><strong>Storing id&rsquo;s of submissions in a text file for now.</strong></p>
+
+<p>That should probably eventually be stored in a database, probably sqlite.</p>
+
+<p>First check to see if the file exists, if it doesn&rsquo;t create an empty array to store the submission ids</p>
+
+<pre><code class="python">if not os.path.isfile("posts_replied_to.txt"):
+    posts_replied_to = []
+</code></pre>
+
+<p>If the file does exist then read it in, split on the new line characters and filter out None as it&rsquo;s possible to have a blank file.</p>
+
+<pre><code class="python">else:
+    with open ("posts_replied_to.txt", "r") as f:
+        posts_replied_to = f.read()
+        posts_replied_to = posts_replied_to.split("\n")
+        posts_replied_to = filter(None, posts_replied_to)
+</code></pre>
+
+<p><strong>Praw call to connect to our subreddit of choice!</strong></p>
+
+<pre><code class="python">subreddit = r.get_subreddit("ENTER_SUBREDDIT_NAME")
+</code></pre>
+
+<p><strong>Loop through the new submissions. We&rsquo;re only grabbing 5 each time</strong></p>
+
+<pre><code class="python">for submission in subreddit.get_new(limit=5):
+    #Does our submission already exist?
+    if submission.id not in posts_replied_to:
+        # If not, let's make our call to slack to post the submission and store
+        # the submission.id in our array of posts we've replied to
+        sc.api_call("chat.postMessage", username="new post bot", channel="#ENTER_SLACK_CHANNEL", text=submission.permalink, unfurl_links="true")
+        posts_replied_to.append(submission.id)
+</code></pre>
+
+<p><strong>Open our text file and write out the new submission.id so we don&rsquo;t post it again.</strong></p>
+
+<pre><code class="python">with open("posts_replied_to.txt", "w") as f:
+    for post_id in posts_replied_to:
+        f.write(post_id + "\n")
+</code></pre>
+
+<h2>Miscellaneous</h2>
+
+<p>Reddit also asks that you only hit their api once every 30 seconds. To monitor the new submissions I set a cron job to run this every minute. I tested this by letting the newest 5 submissions get posted to slack, then I created a test post to make sure it was posted. When it showed up in our Slack channel I knew we were set!</p>
+
+<p><a href="https://github.com/jhwhite/reddit-slackbot">Source</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Want to Get Email Updates From a Store That Doesn't Provide Them?]]></title>
